@@ -1,18 +1,16 @@
 #pragma once
 
-
 #include <QAbstractItemModel>
 #include <QAbstractTableModel>
 
 #include "calendarctrl.h"
 
-
-class WeekModel : public QAbstractTableModel
+class MonthModel : public QAbstractTableModel
 {
     Q_OBJECT
 
 public:
-    explicit WeekModel(QObject *parent = nullptr);
+    explicit MonthModel(QObject *parent = nullptr);
 
     // Header:
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -25,5 +23,4 @@ public:
 
 private:
 };
-
 

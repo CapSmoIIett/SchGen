@@ -15,10 +15,17 @@ qt_add_executable(appSchGen
     qml.qrc
     images.qrc
 
-    weekmodel.h
-    weekmodel.cpp
+    appcore.h
+    appcore.cpp
     calendarctrl.h
     calendarctrl.cpp
+    daymodel.h
+    daymodel.cpp
+    weekmodel.h
+    weekmodel.cpp
+    monthmodel.h
+    monthmodel.cpp
+
 )
 
 qt_add_qml_module(appSchGen

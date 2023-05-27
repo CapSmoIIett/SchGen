@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
-        <file>qml/AccItem.qml</file>
         <file>qml/menuItem.qml</file>
         <file>qml/week.qml</file>
+        <file>qml/day.qml</file>
+        <file>qml/month.qml</file>
     </qresource>
 </RCC>

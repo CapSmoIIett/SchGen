@@ -86,18 +86,27 @@ ApplicationWindow {
 
             ToolButton {
                 icon.source: "qrc:/images/back-48.png"
+
+                onClicked: {
+                    app.datePrev();
+                }
             }
 
             ToolButton {
                 icon.source: "qrc:/images/forward-48.png"
+
+                onClicked: {
+                    app.dateNext();
+                }
             }
 
             Label {
+                id: dateLabel
                 elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
 
-                text: qsTr("May 2023")
+                text: app.year + " " + app.getMonthByName(app.month)
             }
 
             Label {
@@ -113,6 +122,7 @@ ApplicationWindow {
             }
 
             ToolButton {
+                id: calendarSelector
                 text: qsTr("week")
 
                 onClicked: menu.open()
@@ -121,12 +131,27 @@ ApplicationWindow {
                     y: parent.height
                     MenuItem {
                         text: 'day'
+                        onTriggered: {
+                            calendarSelector.text = qsTr("day")
+                            loader.loadFragment("qrc:/qml/day.qml")
+                            app.type = app.Day
+                        }
                     }
                     MenuItem {
                         text: 'week'
+                        onTriggered: {
+                            calendarSelector.text = qsTr("week")
+                            loader.loadFragment("qrc:/qml/week.qml")
+                            app.type = app.Week
+                        }
                     }
                     MenuItem {
                         text: 'month'
+                        onTriggered: {
+                            calendarSelector.text = qsTr("month")
+                            loader.loadFragment("qrc:/qml/month.qml")
+                            app.type = app.Year
+                        }
                     }
                 }
             }
@@ -376,6 +401,13 @@ ApplicationWindow {
                     loader.source = page_source;
                 }
             }
+        }
+    }
+
+    Connections {
+        target: app
+        onDateChanged: {
+            console.log("hi")
         }
     }
 }

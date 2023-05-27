@@ -1,3 +1,4 @@
+
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
@@ -59,12 +60,12 @@ import Qt.labs.qmlmodels
 
 
             columnWidthProvider: function (column) {
-                return table.width / 7//table.model.columnCount();
+                return table.width
             }
 
             onWidthChanged: table.forceLayout()
 
-            model: week
+            model: day
 
             delegate: Rectangle {
                 implicitWidth: 40

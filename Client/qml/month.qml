@@ -28,25 +28,6 @@ import Qt.labs.qmlmodels
             }
         }
 
-        VerticalHeaderView {
-            id: verticalHeader
-            syncView: table
-            anchors.left: parent.left
-            anchors.top: table.top
-
-            delegate: Rectangle {
-                width: 550
-                border.width: 1
-
-                Text {
-                     anchors.centerIn: parent
-                    elide: Text.ElideRight
-                    horizontalAlignment: Text.AlignHCenter
-                    text: model.display//modelData//model.headerData()
-                }
-            }
-        }
-
         TableView {
             id: table
             anchors.fill: parent
@@ -54,17 +35,19 @@ import Qt.labs.qmlmodels
             rowSpacing: 1
             //clip: true
 
-            anchors.leftMargin: verticalHeader.width
             anchors.topMargin: horizontalHeader.height
 
 
             columnWidthProvider: function (column) {
-                return table.width / 7//table.model.columnCount();
+                return table.width / 7
+            }
+            rowHeightProvider: function (column) {
+                return table.width / model.columnCount()
             }
 
             onWidthChanged: table.forceLayout()
 
-            model: week
+            model: month
 
             delegate: Rectangle {
                 implicitWidth: 40
@@ -74,7 +57,6 @@ import Qt.labs.qmlmodels
                 Rectangle {
                     anchors.fill: parent
                     anchors.margins: 2
-                    color: display ? Material.color(Material.Purple) : "#FFFFFF"
                     border.width: display ? 1 : 0
                 }
 
