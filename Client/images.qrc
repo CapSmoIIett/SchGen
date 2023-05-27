@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/time-96.png</file>
+        <file>images/back.png</file>
+        <file>images/forward.png</file>
+        <file>images/menu-64.png</file>
+        <file>images/back-48.png</file>
+        <file>images/forward-48.png</file>
+        <file>images/settings-32.png</file>
+        <file>images/settings-64.png</file>
+        <file>images/help-32.png</file>
+        <file>images/help-64.png</file>
+        <file>images/plus-48.png</file>
+        <file>images/plus-24.png</file>
+    </qresource>
+</RCC>

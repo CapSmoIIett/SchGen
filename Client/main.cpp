@@ -1,7 +1,12 @@
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQmlProperty>
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "weekmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,6 +18,9 @@ int main(int argc, char *argv[])
         &app, []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.load(url);
+
+    WeekModel week;
+    engine.rootContext()->setContextProperty("week", &week);
 
     return app.exec();
 }

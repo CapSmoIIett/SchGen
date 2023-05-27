@@ -13,7 +13,12 @@ find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 qt_add_executable(appSchGen
     main.cpp
     qml.qrc
+    images.qrc
 
+    weekmodel.h
+    weekmodel.cpp
+    calendarctrl.h
+    calendarctrl.cpp
 )
 
 qt_add_qml_module(appSchGen
