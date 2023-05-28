@@ -183,6 +183,9 @@ ApplicationWindow {
                 ScrollView {
                     anchors.fill: parent
                     ColumnLayout {
+                        id: dataList
+
+                        signal resize
 
                         anchors.left: parent.left
                         anchors.right: parent.right
@@ -232,23 +235,77 @@ ApplicationWindow {
                         }
 
                         ///////////////////////////////////////////////////////////////
-                        ColumnLayout {
-                            id: columnGroup
-                            spacing: 5
+                        ListView {
+                            id: list
+                            anchors.top: layout.bottom
+                            model: groups
+                            implicitHeight: parent.height
 
-                            //height: labelGroup.height + listGroup.height + editGroup.height
-                            Rectangle {
-                                Layout.topMargin: 15
-                                Layout.leftMargin: 15
+                            header: Rectangle {
+                                id: layout
 
                                 height: 20
                                 width: 150
-                                Label {
-                                    text: "Group"
+                                Rectangle {
+                                    anchors.fill: parent
+                                    anchors.leftMargin: 15
+
+                                    Label {
+                                        text: "Group"
+                                    }
                                 }
                             }
 
-                            Repeater {
+                            footer: Rectangle {
+                                anchors.top: list.bottom
+                                Layout.leftMargin: 25
+
+                                height: 20
+                                width: 150
+
+                                Rectangle {
+
+                                    anchors.fill: parent
+                                    anchors.leftMargin: 25
+
+                                    TextInput {
+                                        id: groupLine
+                                        text: "+ add"
+
+                                        onFocusChanged: function (scope) {
+                                            if (scope)
+                                                groupLine.text = "";
+                                            else
+                                                groupLine.text = "+ add";
+                                        }
+
+                                        onAccepted: {
+                                            groups.addData(groupLine.text);
+                                            groupLine.text = "+ add";
+                                        }
+                                    }
+                                }
+                            }
+
+                            delegate: Rectangle {
+
+                                height: 20
+                                width: 150
+
+                                Rectangle {
+
+                                    anchors.fill: parent
+                                    anchors.leftMargin: 25
+
+                                    Label {
+                                        text: model.display
+                                    }
+                                }
+                            }
+                        }
+
+                        /*Repeater {
+                                id: listGroups
                                 model: groups
                                 delegate: Rectangle {
                                     Layout.leftMargin: 25
@@ -259,32 +316,10 @@ ApplicationWindow {
                                         text: model.display
                                     }
                                 }
-                            }
+                            }*/
+                    }
 
-                            Rectangle {
-                                Layout.leftMargin: 25
-
-                                height: 20
-                                width: 150
-                                TextInput {
-                                    id: groupLine
-                                    text: "+ add"
-
-                                    onFocusChanged: function (scope) {
-                                        if (scope)
-                                            groupLine.text = "";
-                                        else
-                                            groupLine.text = "+ add";
-                                    }
-
-                                    onAccepted: {
-                                        groupLine.text = "+ add";
-                                        l.height = 500;
-                                    }
-                                }
-                            }
-                        }
-
+                    /*
                         ColumnLayout {
                             id: columnTeachers
                             anchors.top: columnGroup.bottom
@@ -393,6 +428,11 @@ ApplicationWindow {
                                     text: "Classroom3"
                                 }
                             }
+                        }
+                        */
+                    Connections {
+                        target: dataList
+                        onResize: {
                         }
                     }
                 }

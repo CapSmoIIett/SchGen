@@ -12,7 +12,8 @@
 class GroupListModel : public QAbstractListModel
 {
     Q_OBJECT
-    //QML_ELEMENT
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
+    QML_ELEMENT
 
 public:
     GroupListModel(QObject *parent = nullptr);
@@ -21,7 +22,12 @@ public:
     QVariant data( const QModelIndex& index, int role) const override;
     QHash<int, QByteArray> roleNames() const override;
 
-    //Q_INVOKABLE void DataAdd();
+    int count ();
+
+    Q_INVOKABLE void addData(QString);
+
+signals:
+    void countChanged (int);
 
 private:
     QVector<Group> v_Groups;
