@@ -48,6 +48,7 @@ int AppCore::type()
 }
 void AppCore::setType(const int& t)
 {
+    qDebug() << t;
     i_Type = t;
 }
 
@@ -68,22 +69,26 @@ void AppCore::dateNext()
 
     switch (i_Type)
     {
+    case Week: day += 6;
     case Day:
     {
-        if (day != CalendarCtrl::GetNumbersOfDays(month, year))
+        day += 1;
+
+        if (day <= CalendarCtrl::GetNumbersOfDays(month, year))
         {
-            d_SelectedDate.setDate(year, month, day + 1);
+            d_SelectedDate.setDate(year, month, day);
             emit DateChanged();
             break;
         }
 
-        day = 1;
+        day -= CalendarCtrl::GetNumbersOfDays(month, year);
     }
     case Month:
     {
-        if (month != DECEMBER)
+        month += 1;
+        if (month <= DECEMBER)
         {
-            d_SelectedDate.setDate(year, month + 1, day);
+            d_SelectedDate.setDate(year, month, day);
             emit DateChanged();
             break;
         }
@@ -105,30 +110,30 @@ void AppCore::datePrev()
 
     switch (i_Type)
     {
+    case Week: day -= 6;
     case Day:
     {
-        if (day != 1)
+        day -= 1;
+        if (day > 1)
         {
-            d_SelectedDate.setDate(year, month, day - 1);
+            d_SelectedDate.setDate(year, month, day);
             emit DateChanged();
             break;
         }
 
-        day = CalendarCtrl::GetNumbersOfDays(month == JANUARY ? DECEMBER : month - 1, year);
+        day += CalendarCtrl::GetNumbersOfDays(month == JANUARY ? DECEMBER : month - 1, year);
     }
     case Month:
     {
-        if (month != JANUARY)
+        month -= 1;
+        if (month >= JANUARY)
         {
-            d_SelectedDate.setDate(year, month + 1, day);
+            d_SelectedDate.setDate(year, month, day);
             emit DateChanged();
             break;
         }
 
         month = DECEMBER;
-    }
-    case Year:
-    {
         d_SelectedDate.setDate(year - 1, month, day);
         emit DateChanged();
     }

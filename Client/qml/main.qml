@@ -134,7 +134,7 @@ ApplicationWindow {
                         onTriggered: {
                             calendarSelector.text = qsTr("day")
                             loader.loadFragment("qrc:/qml/day.qml")
-                            app.type = app.Day
+                            app.type = 0//app.Day
                         }
                     }
                     MenuItem {
@@ -142,7 +142,7 @@ ApplicationWindow {
                         onTriggered: {
                             calendarSelector.text = qsTr("week")
                             loader.loadFragment("qrc:/qml/week.qml")
-                            app.type = app.Week
+                            app.type = 1//app.Week
                         }
                     }
                     MenuItem {
@@ -150,7 +150,7 @@ ApplicationWindow {
                         onTriggered: {
                             calendarSelector.text = qsTr("month")
                             loader.loadFragment("qrc:/qml/month.qml")
-                            app.type = app.Year
+                            app.type = 2//app.Month
                         }
                     }
                 }
