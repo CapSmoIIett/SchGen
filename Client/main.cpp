@@ -11,6 +11,7 @@
 #include "daymodel.h"
 #include "weekmodel.h"
 #include "monthmodel.h"
+#include "grouplistmodel.h"
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +35,9 @@ int main(int argc, char *argv[])
 
     MonthModel month;
     engine.rootContext()->setContextProperty("month", &month);
+
+    GroupListModel groups;
+    engine.rootContext()->setContextProperty("groups", &groups);
 
     return app.exec();
 }

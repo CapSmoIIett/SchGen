@@ -15,6 +15,8 @@ qt_add_executable(appSchGen
     qml.qrc
     images.qrc
 
+    ../datastructures.h
+
     appcore.h
     appcore.cpp
     calendarctrl.h
@@ -25,6 +27,8 @@ qt_add_executable(appSchGen
     weekmodel.cpp
     monthmodel.h
     monthmodel.cpp
+    grouplistmodel.h
+    grouplistmodel.cpp
 
 )
 

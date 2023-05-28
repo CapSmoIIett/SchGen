@@ -132,25 +132,25 @@ ApplicationWindow {
                     MenuItem {
                         text: 'day'
                         onTriggered: {
-                            calendarSelector.text = qsTr("day")
-                            loader.loadFragment("qrc:/qml/day.qml")
-                            app.type = 0//app.Day
+                            calendarSelector.text = qsTr("day");
+                            loader.loadFragment("qrc:/qml/day.qml");
+                            app.type = 0;//app.Day
                         }
                     }
                     MenuItem {
                         text: 'week'
                         onTriggered: {
-                            calendarSelector.text = qsTr("week")
-                            loader.loadFragment("qrc:/qml/week.qml")
-                            app.type = 1//app.Week
+                            calendarSelector.text = qsTr("week");
+                            loader.loadFragment("qrc:/qml/week.qml");
+                            app.type = 1;//app.Week
                         }
                     }
                     MenuItem {
                         text: 'month'
                         onTriggered: {
-                            calendarSelector.text = qsTr("month")
-                            loader.loadFragment("qrc:/qml/month.qml")
-                            app.type = 2//app.Month
+                            calendarSelector.text = qsTr("month");
+                            loader.loadFragment("qrc:/qml/month.qml");
+                            app.type = 2;//app.Month
                         }
                     }
                 }
@@ -180,31 +180,33 @@ ApplicationWindow {
                 width: 200
                 height: parent.height
 
-                ColumnLayout {
+                ScrollView {
+                    anchors.fill: parent
+                    ColumnLayout {
 
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
-                    spacing: 5
+                        spacing: 5
 
-                    Rectangle {
-                        id: createButton
-                        radius: 30
-                        border.width: 1
+                        Rectangle {
+                            id: createButton
+                            radius: 30
+                            border.width: 1
 
-                        Layout.margins: 15
+                            Layout.margins: 15
 
-                        height: 40
-                        width: 150
+                            height: 40
+                            width: 150
 
-                        MouseArea {
-                            id: mouseArea
-                            anchors.fill: parent
+                            MouseArea {
+                                id: mouseArea
+                                anchors.fill: parent
 
-                            hoverEnabled: true
+                                hoverEnabled: true
 
-                            //anchors.width: parent.width
-                            /*Image {
+                                //anchors.width: parent.width
+                                /*Image {
                                 id: plus
                                 anchors.top: createButton.top
                                 anchors.left: createButton.left
@@ -217,173 +219,179 @@ ApplicationWindow {
                             Label {
                                 width: 15
                             }*/
-                            Label {
-                                id: createLabel
+                                Label {
+                                    id: createLabel
 
-                                anchors.fill: parent
+                                    anchors.fill: parent
 
-                                text: qsTr("Create")
-                                verticalAlignment: Text.AlignVCenter
-                                horizontalAlignment: Text.AlignHCenter
-                            }
-                        }
-                    }
-
-                    ColumnLayout {
-                        spacing: 5
-
-                        Rectangle {
-                            Layout.topMargin: 15
-                            Layout.leftMargin: 15
-
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Group"
+                                    text: qsTr("Create")
+                                    verticalAlignment: Text.AlignVCenter
+                                    horizontalAlignment: Text.AlignHCenter
+                                }
                             }
                         }
 
-                        Rectangle {
-                            Layout.leftMargin: 25
+                        ///////////////////////////////////////////////////////////////
+                        ColumnLayout {
+                            id: columnGroup
+                            spacing: 5
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "950504"
+                            //height: labelGroup.height + listGroup.height + editGroup.height
+                            Rectangle {
+                                Layout.topMargin: 15
+                                Layout.leftMargin: 15
+
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Group"
+                                }
                             }
-                        }
-                        Rectangle {
-                            Layout.leftMargin: 25
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "950503"
+                            Repeater {
+                                model: groups
+                                delegate: Rectangle {
+                                    Layout.leftMargin: 25
+
+                                    height: 20
+                                    width: 150
+                                    Label {
+                                        text: model.display
+                                    }
+                                }
                             }
-                        }
-                        Rectangle {
-                            Layout.leftMargin: 25
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "950502"
-                            }
-                        }
+                            Rectangle {
+                                Layout.leftMargin: 25
 
-                        Rectangle {
-                            Layout.leftMargin: 25
+                                height: 20
+                                width: 150
+                                TextInput {
+                                    id: groupLine
+                                    text: "+ add"
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "950501"
-                            }
-                        }
-                    }
+                                    onFocusChanged: function (scope) {
+                                        if (scope)
+                                            groupLine.text = "";
+                                        else
+                                            groupLine.text = "+ add";
+                                    }
 
-                    ColumnLayout {
-                        spacing: 5
-
-                        Rectangle {
-                            Layout.topMargin: 15
-                            Layout.leftMargin: 15
-
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Teachers"
-                            }
-                        }
-
-                        Rectangle {
-                            Layout.leftMargin: 25
-
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Teacher"
-                            }
-                        }
-                        Rectangle {
-                            Layout.leftMargin: 25
-
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Teacher1"
-                            }
-                        }
-                        Rectangle {
-                            Layout.leftMargin: 25
-
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Teacher2"
+                                    onAccepted: {
+                                        groupLine.text = "+ add";
+                                        l.height = 500;
+                                    }
+                                }
                             }
                         }
 
-                        Rectangle {
-                            Layout.leftMargin: 25
+                        ColumnLayout {
+                            id: columnTeachers
+                            anchors.top: columnGroup.bottom
+                            spacing: 5
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Teacher3"
+                            Rectangle {
+                                Layout.topMargin: 15
+                                Layout.leftMargin: 15
+
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Teachers"
+                                }
+                            }
+
+                            Rectangle {
+                                Layout.leftMargin: 25
+
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Teacher"
+                                }
+                            }
+                            Rectangle {
+                                Layout.leftMargin: 25
+
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Teacher1"
+                                }
+                            }
+                            Rectangle {
+                                Layout.leftMargin: 25
+
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Teacher2"
+                                }
+                            }
+
+                            Rectangle {
+                                Layout.leftMargin: 25
+
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Teacher3"
+                                }
                             }
                         }
-                    }
 
-                    ColumnLayout {
-                        spacing: 5
+                        ColumnLayout {
+                            id: columnClassrooms
+                            anchors.top: columnTeachers.bottom
+                            spacing: 5
 
-                        Rectangle {
-                            Layout.topMargin: 15
-                            Layout.leftMargin: 15
+                            Rectangle {
+                                Layout.topMargin: 15
+                                Layout.leftMargin: 15
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Classrooms"
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Classrooms"
+                                }
                             }
-                        }
 
-                        Rectangle {
-                            Layout.leftMargin: 25
+                            Rectangle {
+                                Layout.leftMargin: 25
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Classroom"
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Classroom"
+                                }
                             }
-                        }
-                        Rectangle {
-                            Layout.leftMargin: 25
+                            Rectangle {
+                                Layout.leftMargin: 25
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Classroom1"
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Classroom1"
+                                }
                             }
-                        }
-                        Rectangle {
-                            Layout.leftMargin: 25
+                            Rectangle {
+                                Layout.leftMargin: 25
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Classroom2"
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Classroom2"
+                                }
                             }
-                        }
 
-                        Rectangle {
-                            Layout.leftMargin: 25
+                            Rectangle {
+                                Layout.leftMargin: 25
 
-                            height: 20
-                            width: 150
-                            Label {
-                                text: "Classroom3"
+                                height: 20
+                                width: 150
+                                Label {
+                                    text: "Classroom3"
+                                }
                             }
                         }
                     }
@@ -407,7 +415,7 @@ ApplicationWindow {
     Connections {
         target: app
         onDateChanged: {
-            console.log("hi")
+            console.log("hi");
         }
     }
 }
