@@ -54,3 +54,15 @@ void GroupListModel::addData(QString name)
 
     emit dataChanged(index(0, 0), index(v_Groups.size() - 1), {Qt::DisplayRole});
 }
+
+void GroupListModel::removeData(int row)
+{
+
+    if (row >= v_Groups.size())
+        return;
+
+
+    beginRemoveRows(QModelIndex(), rowCount(), rowCount());
+    v_Groups.erase(v_Groups.begin() + row);
+    endRemoveRows();
+}

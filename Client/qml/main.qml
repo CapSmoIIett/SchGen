@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Window
+import QtQuick.Window 2.2
 import QtQuick.Layouts
 import QtQuick.Controls 2.2
 import QtQuick.Controls.Material
@@ -231,6 +231,10 @@ ApplicationWindow {
                                     verticalAlignment: Text.AlignVCenter
                                     horizontalAlignment: Text.AlignHCenter
                                 }
+
+                                onClicked: {
+                                    creatingWindow.visible = true;
+                                }
                             }
                         }
 
@@ -240,6 +244,7 @@ ApplicationWindow {
                             anchors.top: layout.bottom
                             model: groups
                             implicitHeight: parent.height
+                            focus: true
 
                             header: Rectangle {
                                 id: layout
@@ -295,10 +300,45 @@ ApplicationWindow {
                                 Rectangle {
 
                                     anchors.fill: parent
-                                    anchors.leftMargin: 25
 
-                                    Label {
-                                        text: model.display
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        //anchors.width: main.width
+                                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+                                        hoverEnabled: true
+
+                                        anchors.leftMargin: 25
+
+                                        Label {
+                                            text: model.display
+                                        }
+
+                                        onClicked: {
+                                            if (mouse.button === Qt.RightButton) {
+                                                console.log(index);
+                                                menuGroup.curRow = index;
+                                                menuGroup.popup();
+                                            } else if (mouse.button === Qt.LeftButton) {
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Menu {
+                                    id: menuGroup
+                                    y: openMenuButton.height
+
+                                    property int curRow
+
+                                    MenuItem {
+                                        text: 'remove'
+
+                                        onClicked: {
+                                            //app.removeUserRequest(menuGroup.curRow)
+                                            //list.remove(menuGroup.curRow);
+                                            groups.removeData(menuGroup.curRow);
+                                        }
                                     }
                                 }
                             }
@@ -430,11 +470,6 @@ ApplicationWindow {
                             }
                         }
                         */
-                    Connections {
-                        target: dataList
-                        onResize: {
-                        }
-                    }
                 }
             }
 
@@ -456,6 +491,297 @@ ApplicationWindow {
         target: app
         onDateChanged: {
             console.log("hi");
+        }
+    }
+
+    Window {
+        id: creatingWindow
+        visible: false
+
+        minimumHeight: 500
+        minimumWidth: 500
+
+        x: (Screen.width - loginWindow.width) / 2
+        y: (Screen.height - loginWindow.height) / 2
+
+        TabBar {
+            id: bar
+            width: parent.width
+            TabButton {
+                text: qsTr("Class")
+            }
+            TabButton {
+                text: qsTr("Schedule")
+            }
+        }
+
+        StackLayout {
+            width: parent.width
+            currentIndex: bar.currentIndex
+            Item {
+                id: classTab
+
+                GridLayout {
+                    rows: 6
+                    columns: 2
+
+                    anchors.topMargin: bar.height
+                    flow: GridLayout.TopToBottom
+
+                    //title: "Generate Schedule"
+                    anchors.fill: parent
+
+                    Label {
+                        text: "Name:"
+                    }
+                    Label {
+                        text: "Teacher:"
+                    }
+                    Label {
+                        text: "Group:"
+                    }
+                    Label {
+                        text: "Classroom:"
+                    }
+                    Label {
+                        text: "Date:"
+                    }
+                    Label {
+                        text: "Time:"
+                    }
+
+                    Rectangle {
+                        width: 200
+                        height: 20
+                        border.width: 1
+
+                        TextInput {
+                            anchors.fill: parent
+                            text: "name"
+                        }
+                    }
+
+                    ComboBox {
+                        anchors.margins: 15
+                        width: 100
+                        height: 20
+
+                        model: {
+                            "Teacher";
+                        }
+
+                        onEditTextChanged: save.enabled = true
+                    }
+                    ComboBox {
+                        anchors.margins: 15
+                        width: 100
+                        height: 20
+
+                        model: {
+                            "Group";
+                        }
+
+                        onEditTextChanged: save.enabled = true
+                    }
+                    ComboBox {
+                        anchors.margins: 15
+                        width: 100
+                        height: 20
+
+                        model: {
+                            "Classroom";
+                        }
+
+                        onEditTextChanged: save.enabled = true
+                    }
+                    Rectangle {
+                        width: 200
+                        height: 20
+                        border.width: 1
+                        Row {
+                            Label {
+                                text: "year:"
+                            }
+                            TextInput {
+                                text: "year"
+                            }
+                            Label {
+                                width: 5
+                            }
+                            Label {
+                                text: "month:"
+                            }
+                            TextInput {
+                                text: "month"
+                            }
+                            Label {
+                                width: 5
+                            }
+                            Label {
+                                text: "day:"
+                            }
+                            TextInput {
+                                text: "day"
+                            }
+                        }
+                    }
+                    Rectangle {
+                        width: 200
+                        height: 20
+                        border.width: 1
+                        Row {
+                            TextInput {
+                                text: "12"
+                            }
+                            Label {
+                                text: ":"
+                            }
+                            TextInput {
+                                text: "00"
+                            }
+                        }
+                    }
+                }
+            }
+            Item {
+                id: scheduleTab
+
+                GridLayout {
+                    rows: 6
+                    columns: 2
+
+                    anchors.topMargin: bar.height
+                    flow: GridLayout.TopToBottom
+
+                    //title: "Generate Schedule"
+                    anchors.fill: parent
+
+                    Label {
+                        text: "Name:"
+                    }
+                    Label {
+                        text: "Teacher:"
+                    }
+                    Label {
+                        text: "Group:"
+                    }
+                    Label {
+                        text: "Classrooms:"
+                    }
+                    Label {
+                        text: "Begin date:"
+                    }
+                    Label {
+                        text: "End date:"
+                    }
+
+                    Rectangle {
+                        width: 200
+                        height: 20
+                        border.width: 1
+
+                        TextInput {
+                            anchors.fill: parent
+                            text: "name"
+                        }
+                    }
+
+                    ComboBox {
+                        anchors.margins: 15
+                        width: 100
+                        height: 20
+
+                        model: {
+                            "Teacher";
+                        }
+
+                        onEditTextChanged: save.enabled = true
+                    }
+                    ComboBox {
+                        anchors.margins: 15
+                        width: 100
+                        height: 20
+
+                        model: {
+                            "Group";
+                        }
+
+                        onEditTextChanged: save.enabled = true
+                    }
+                    Rectangle {
+                        width: 200
+                        height: 20
+                        border.width: 1
+
+                        TextInput {
+                            anchors.fill: parent
+                            text: "Classroom"
+                        }
+                    }
+                    Rectangle {
+                        width: 200
+                        height: 20
+                        border.width: 1
+                        Row {
+                            Label {
+                                text: "year:"
+                            }
+                            TextInput {
+                                text: "year"
+                            }
+                            Label {
+                                width: 5
+                            }
+                            Label {
+                                text: "month:"
+                            }
+                            TextInput {
+                                text: "month"
+                            }
+                            Label {
+                                width: 5
+                            }
+                            Label {
+                                text: "day:"
+                            }
+                            TextInput {
+                                text: "day"
+                            }
+                        }
+                    }
+                    Rectangle {
+                        width: 200
+                        height: 20
+                        border.width: 1
+                        Row {
+                            Label {
+                                text: "year:"
+                            }
+                            TextInput {
+                                text: "year"
+                            }
+                            Label {
+                                width: 5
+                            }
+                            Label {
+                                text: "month:"
+                            }
+                            TextInput {
+                                text: "month"
+                            }
+                            Label {
+                                width: 5
+                            }
+                            Label {
+                                text: "day:"
+                            }
+                            TextInput {
+                                text: "day"
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

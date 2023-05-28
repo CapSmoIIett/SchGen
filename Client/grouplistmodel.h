@@ -25,6 +25,7 @@ public:
     int count ();
 
     Q_INVOKABLE void addData(QString);
+    Q_INVOKABLE void removeData(int);
 
 signals:
     void countChanged (int);
