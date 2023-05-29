@@ -6,7 +6,7 @@
 #include <qqml.h>
 #include <QVector>
 
-#include "../datastructures.h"
+//#include "../datastructures.h"
 
 
 class GroupListModel : public QAbstractListModel
@@ -26,12 +26,13 @@ public:
 
     Q_INVOKABLE void addData(QString);
     Q_INVOKABLE void removeData(int);
+    //Q_INVOKABLE void loadDataRequest();
 
 signals:
     void countChanged (int);
 
 private:
-    QVector<Group> v_Groups;
+    //QVector<Group> v_Groups;
 };
 
 

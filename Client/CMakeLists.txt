@@ -15,7 +15,7 @@ qt_add_executable(appSchGen
     qml.qrc
     images.qrc
 
-    ../datastructures.h
+    #../datastructures.h
 
     appcore.h
     appcore.cpp

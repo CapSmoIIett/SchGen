@@ -10,7 +10,6 @@ import QtQuick.Dialogs
 
 ApplicationWindow {
     visible: true
-    title: qsTr("SchGen")
 
     minimumHeight: 600
     minimumWidth: 800
@@ -170,7 +169,7 @@ ApplicationWindow {
         anchors.rightMargin: -1
         anchors.bottomMargin: -1
 
-        Row {
+        RroleValue: trueow {
 
             anchors.fill: parent
 

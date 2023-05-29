@@ -36,8 +36,6 @@ int MonthModel::rowCount(const QModelIndex &parent) const
 int MonthModel::columnCount(const QModelIndex &parent) const
 {
     return 7;
-
-    // FIXME: Implement me!
 }
 
 QVariant MonthModel::data(const QModelIndex &index, int role) const

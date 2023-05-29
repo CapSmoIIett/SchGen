@@ -40,10 +40,42 @@ int WeekModel::columnCount(const QModelIndex &parent) const
     // FIXME: Implement me!
 }
 
+QHash<int, QByteArray> WeekModel::roleNames() const
+{
+    QHash<int, QByteArray> hash;
+    return {{Qt::DisplayRole, "display"}, {Role::Existence, "existence"}, {Role::Begin, "begin"}, {Role::Duration, "duration"}};
+}
+
 QVariant WeekModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
+
+    if(index.row() == 3 && index.column() == 3)
+    {
+        switch (role)
+        {
+        case Existence: return true;
+        case Begin: return 0;
+        case Duration: return 1;
+        }
+    }
+    if(index.row() == 3 && index.column() == 2)
+    {
+        switch (role)
+        {
+        case Existence: return true;
+        case Begin: return 0.5;
+        case Duration: return 1.5;
+        }
+    }
+
+        switch (role)
+        {
+        case Existence: return false;
+        case Begin: return 0;
+        case Duration: return 0;
+        }
 
     // FIXME: Implement me!
     return QVariant();
